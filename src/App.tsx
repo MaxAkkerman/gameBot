@@ -19,6 +19,7 @@ export const App = () => {
     const verticalScrollbar = useRef(null);
 
     return (
+        <div style={{overflow:'hidden'}}>
         <Stage
             onWheel={(e) => {
                 e.evt.preventDefault();
@@ -98,5 +99,6 @@ export const App = () => {
                 />
             </Layer>
         </Stage>
+        </div>
     );
 };

@@ -11,6 +11,10 @@
     />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+      Telegram.WebApp.isVerticalSwipesEnabled = false
+      Telegram.WebApp.ready()
+      Telegram.WebApp.expand()
+      Telegram.WebApp.disableVerticalSwipes()
       Telegram.WebApp.expand();
     </script>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
