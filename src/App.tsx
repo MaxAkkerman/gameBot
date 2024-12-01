@@ -13,6 +13,8 @@ const LeaderBoardHeight = 100;
 const canvasWidth = 400;
 const canvasHeight = 800;
 
+
+
 export const App = () => {
     const mainLayerRef = useRef(null)
     const stageRef = useRef(null)
@@ -32,8 +34,8 @@ export const App = () => {
             onTouchMove={(e) => {
                 e.evt.preventDefault();
 // console.log('deltaX',e.evt.de)
-                const dx = e.evt.touches[0].clientX - posStart.x;
-                const dy = e.evt.touches[0].clientY - posStart.y;
+                const dx = Number(e.evt.touches[0].clientX - posStart.x) * -1;
+                const dy = Number(e.evt.touches[0].clientY - posStart.y) * -1;
 console.log('posstae',posStart)
                 // @ts-ignore
                 const minX = stageRef.current.width() - canvasWidth;
@@ -53,11 +55,6 @@ console.log('posstae',posStart)
                 mainLayerRef.current.position({x, y});
                 // @ts-ignore
                 const availableHeight = stageRef.current.height() - verticalScrollbar.current.height();
-                // @ts-ignore
-                console.log('mainLayerRef.current.y()',mainLayerRef.current.y())
-                // @ts-ignore
-                console.log('stageRef.current.height(',stageRef.current.height())
-                console.log('availableHeight',availableHeight)
                 // @ts-ignore
                 const vy = (mainLayerRef.current.y() / (stageRef.current.height() - canvasHeight)) * availableHeight;
                 console.log('vy',vy)
