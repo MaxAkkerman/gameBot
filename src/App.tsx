@@ -21,24 +21,24 @@ export const App = () => {
     return (
         <div className="scrollable-element">
         <Stage
-            onWheel={(e) => {
+            onTouchMove={(e) => {
                 e.evt.preventDefault();
-
-                const dx = e.evt.deltaX;
-                const dy = e.evt.deltaY;
+// console.log('deltaX',e.evt.de)
+                // const dx = e.evt.deltaX;
+                // const dy = e.evt.deltaY;
 
                 // @ts-ignore
                 const minX = stageRef.current.width() - canvasWidth;
                 console.log('minX',minX)
                 const maxX = 0;
                 // @ts-ignore
-                const x = Math.max(minX, Math.min(mainLayerRef.current.x() - dx, maxX));
+                const x = Math.max(minX, Math.min(mainLayerRef.current.x() - 10, maxX));
                 console.log('x',x)
                 // @ts-ignore
                 const minY = stageRef.current.height() - canvasHeight;
                 const maxY = 0;
                 // @ts-ignore
-                const y = Math.max(minY, Math.min(mainLayerRef.current.y() - dy, maxY));
+                const y = Math.max(minY, Math.min(mainLayerRef.current.y() - 10, maxY));
                 console.log('y',y)
 
                 // @ts-ignore
