@@ -34,8 +34,8 @@ export const App = () => {
             onTouchMove={(e) => {
                 e.evt.preventDefault();
 // console.log('deltaX',e.evt.de)
-                const dx = Number(e.evt.touches[0].clientX - posStart.x) * -1;
-                const dy = Number(e.evt.touches[0].clientY - posStart.y) * -1;
+                const dx = (Number(e.evt.touches[0].clientX - posStart.x) * -1)/2;
+                const dy = (Number(e.evt.touches[0].clientY - posStart.y) * -1)/2;
 console.log('posstae',posStart)
                 // @ts-ignore
                 const minX = stageRef.current.width() - canvasWidth;
