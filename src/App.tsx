@@ -70,6 +70,7 @@ export const App = () => {
                     width={verticalScrollbarInfo.width}
                     height={verticalScrollbarInfo.height}
                     ref={verticalScrollbar}
+                    preventDefault={false}
                     // fill={"#ccc"}
                     opacity={0.75}
                     // @ts-ignore
