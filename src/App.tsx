@@ -19,7 +19,7 @@ export const App = () => {
     const verticalScrollbar = useRef(null);
 
     return (
-        <div style={{overflow:'hidden'}}>
+        <div className="scrollable-element">
         <Stage
             onWheel={(e) => {
                 e.evt.preventDefault();
