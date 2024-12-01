@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import './App.css';
 import {Layer, Rect, Stage, Text} from "react-konva";
 import {LeaderBoard} from "./components/LeaderBoard";
@@ -17,28 +17,36 @@ export const App = () => {
     const mainLayerRef = useRef(null)
     const stageRef = useRef(null)
     const verticalScrollbar = useRef(null);
-
+    const [posStart, setPosStart] = useState({x:0,y:0})
     return (
         <div className="scrollable-element">
         <Stage
+            onTouchStart={(e)=>{
+                const temp = {
+                    x: e.evt.touches[0].clientX,
+                    y: e.evt.touches[0].clientY
+                }
+                setPosStart(()=>temp)
+
+            }}
             onTouchMove={(e) => {
                 e.evt.preventDefault();
 // console.log('deltaX',e.evt.de)
-                // const dx = e.evt.deltaX;
-                // const dy = e.evt.deltaY;
-
+                const dx = e.evt.touches[0].clientX - posStart.x;
+                const dy = e.evt.touches[0].clientY - posStart.y;
+console.log('posstae',posStart)
                 // @ts-ignore
                 const minX = stageRef.current.width() - canvasWidth;
                 console.log('minX',minX)
                 const maxX = 0;
                 // @ts-ignore
-                const x = Math.max(minX, Math.min(mainLayerRef.current.x() - 10, maxX));
+                const x = Math.max(minX, Math.min(mainLayerRef.current.x() - dx, maxX));
                 console.log('x',x)
                 // @ts-ignore
                 const minY = stageRef.current.height() - canvasHeight;
                 const maxY = 0;
                 // @ts-ignore
-                const y = Math.max(minY, Math.min(mainLayerRef.current.y() - 10, maxY));
+                const y = Math.max(minY, Math.min(mainLayerRef.current.y() - dy, maxY));
                 console.log('y',y)
 
                 // @ts-ignore
