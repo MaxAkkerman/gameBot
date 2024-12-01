@@ -1,15 +1,99 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import './App.css';
 import {Layer, Rect, Stage, Text} from "react-konva";
 import {LeaderBoard} from "./components/LeaderBoard";
 import {MOCK} from "./mocks/mock";
 
+const verticalScrollbarInfo = {
+    width: 10,
+    height: 50
+};
+
+const LeaderBoardHeight = 100;
+const canvasWidth = 400;
+const canvasHeight = 800;
+
 export const App = () => {
+    const mainLayerRef = useRef(null)
+    const stageRef = useRef(null)
+    const verticalScrollbar = useRef(null);
 
     return (
-        <Stage className={'App'} width={300} height={300}>
+        <Stage
+            onWheel={(e) => {
+                e.evt.preventDefault();
+
+                const dx = e.evt.deltaX;
+                const dy = e.evt.deltaY;
+
+                // @ts-ignore
+                const minX = stageRef.current.width() - canvasWidth;
+                console.log('minX',minX)
+                const maxX = 0;
+                // @ts-ignore
+                const x = Math.max(minX, Math.min(mainLayerRef.current.x() - dx, maxX));
+                console.log('x',x)
+                // @ts-ignore
+                const minY = stageRef.current.height() - canvasHeight;
+                const maxY = 0;
+                // @ts-ignore
+                const y = Math.max(minY, Math.min(mainLayerRef.current.y() - dy, maxY));
+                console.log('y',y)
+
+                // @ts-ignore
+                mainLayerRef.current.position({x, y});
+                // @ts-ignore
+                const availableHeight = stageRef.current.height() - verticalScrollbar.current.height();
+                // @ts-ignore
+                console.log('mainLayerRef.current.y()',mainLayerRef.current.y())
+                // @ts-ignore
+                console.log('stageRef.current.height(',stageRef.current.height())
+                console.log('availableHeight',availableHeight)
+                // @ts-ignore
+                const vy = (mainLayerRef.current.y() / (stageRef.current.height() - canvasHeight)) * availableHeight;
+                console.log('vy',vy)
+
+                // @ts-ignore
+                verticalScrollbar.current.x(vy);
+            }}
+            ref={stageRef}
+            className={'App'}
+            width={canvasWidth}
+            height={canvasHeight-300}
+        >
+            <Layer ref={mainLayerRef}>
+                <Text text="Try click on rect"/>
+                <LeaderBoard scoresTable={MOCK} height={LeaderBoardHeight} stageRef={stageRef}/>
+            </Layer>
             <Layer>
-                <LeaderBoard scoresTable={MOCK}/>
+                <Rect
+                    width={verticalScrollbarInfo.width}
+                    height={verticalScrollbarInfo.height}
+                    ref={verticalScrollbar}
+                    // fill={"#ccc"}
+                    opacity={0.75}
+                    // @ts-ignore
+                    x={stageRef.current?.width() - verticalScrollbarInfo.width}
+                    y={0}
+                    draggable={true}
+                    dragBoundFunc={ (pos) => {
+                        // @ts-ignore
+                        pos.x = stageRef.current.width() - verticalScrollbarInfo.width;
+                        // @ts-ignore
+                        pos.y = Math.min(pos.y, stageRef.current.width() - verticalScrollbar.current.height());
+                        return pos;
+                    }
+                    }
+                    onDragMove={() => {
+                        if (!verticalScrollbar.current) return
+                        // @ts-ignore
+                        const availableHeight = stageRef.current.height() - verticalScrollbar.current.height();
+                        // @ts-ignore
+                        const delta = verticalScrollbar.current.y() / availableHeight;
+                        // @ts-ignore
+                        mainLayerRef.current.y((stageRef.current.height() - canvasWidth) * delta);
+                    }}
+                />
             </Layer>
         </Stage>
     );
