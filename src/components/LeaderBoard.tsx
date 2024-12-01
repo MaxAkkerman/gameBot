@@ -14,6 +14,7 @@ export const LeaderBoard = ({scoresTable, height, stageRef}: { scoresTable: ISco
                     id={name}
                     height={30}
                     x={0}
+                    preventDefault={false}
                     y={num * index + 1}
                     width={stageRef.current.width()}
                 >
@@ -22,9 +23,11 @@ export const LeaderBoard = ({scoresTable, height, stageRef}: { scoresTable: ISco
                         fill={'#fff'}
                         text={name}
                         fontSize={16}
+                        preventDefault={false}
                     />
                     <Text
                         x={stageRef.current.width() - 100}
+                        preventDefault={false}
                         width={100}
                         align={'right'}
                         fill={'#fff'}

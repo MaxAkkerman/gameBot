@@ -57,11 +57,12 @@ export const App = () => {
                 verticalScrollbar.current.x(vy);
             }}
             ref={stageRef}
+            preventDefault={false}
             className={'App'}
             width={canvasWidth}
             height={canvasHeight-300}
         >
-            <Layer ref={mainLayerRef}>
+            <Layer preventDefault={false} ref={mainLayerRef}>
                 <Text text="Try click on rect"/>
                 <LeaderBoard scoresTable={MOCK} height={LeaderBoardHeight} stageRef={stageRef}/>
             </Layer>
